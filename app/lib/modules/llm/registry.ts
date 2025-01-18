@@ -17,6 +17,7 @@ import HyperbolicProvider from './providers/hyperbolic';
 import AmazonBedrockProvider from './providers/amazon-bedrock';
 import GithubProvider from './providers/github';
 import SberGigaChatProvider from './providers/giga-chat';
+import BothubRuProvider from './providers/bothubru';
 
 export {
   AnthropicProvider,
@@ -38,4 +39,5 @@ export {
   AmazonBedrockProvider,
   GithubProvider,
   SberGigaChatProvider,
+  BothubRuProvider,
 };
