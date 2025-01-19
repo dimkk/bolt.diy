@@ -1,5 +1,8 @@
 import { getSystemPrompt } from './prompts/prompts';
 import optimized from './prompts/optimized';
+import { getSystemPromptGiga } from './prompts/sberGigaChat_full';
+import optimizedGiga from './prompts/sberGigaChat_optimised';
+import sberGigaChat_short from './prompts/sberGigaChat_short';
 
 export interface PromptOptions {
   cwd: string;
@@ -25,6 +28,21 @@ export class PromptLibrary {
       label: 'Optimized Prompt (experimental)',
       description: 'an Experimental version of the prompt for lower token usage',
       get: (options) => optimized(options),
+    },
+    sberGigaChat_full: {
+      label: 'SberGigaChat Full',
+      description: 'Full version of the prompt for SberGigaChat',
+      get: (options) => getSystemPromptGiga(options.cwd),
+    },
+    sberGigaChat_optimised: {
+      label: 'SberGigaChat Optimized',
+      description: 'Optimized version of the prompt for SberGigaChat',
+      get: (options) => optimizedGiga(options),
+    },
+    sberGigaChat_short: {
+      label: 'SberGigaChat Short',
+      description: 'Short version of the prompt for SberGigaChat',
+      get: () => sberGigaChat_short(),
     },
   };
   static getList() {
