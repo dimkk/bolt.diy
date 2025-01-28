@@ -5,9 +5,11 @@ services:
       context: .
       dockerfile: Dockerfile
       target: bolt-ai-production
-    # ports:
-    #   - "5173:5173"
+    ports:
+      - "5173:5173"
     env_file: ".env.local"
+    labels:
+      - 'traefik.http.middlewares.dimkkbasicauthcoolify.basicauth.users=dimkk:$apr1$5BcitdGx$bKOlQKMK9mZrCcHKw8m.T/'
     environment:
       - NODE_ENV=production
       - COMPOSE_PROFILES=production
@@ -27,21 +29,6 @@ services:
       - VITE_LOG_LEVEL=${VITE_LOG_LEVEL:-debug}
       - DEFAULT_NUM_CTX=${DEFAULT_NUM_CTX:-32768}
       - RUNNING_IN_DOCKER=true
-    networks:
-      - bolt-network
-
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "5173:5173"
-    volumes:
-      - ./nginx/conf.d:/etc/nginx/conf.d
-      - ./nginx/.htpasswd:/etc/nginx/.htpasswd
-    depends_on:
-      - app
-    networks:
-      - bolt-network
-
-networks:
-  bolt-network:
-    driver: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: pnpm run dockerstart
