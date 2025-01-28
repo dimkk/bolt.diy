@@ -7,14 +7,11 @@ import fs from 'fs';
 export default class BothubRuProvider extends BaseProvider {
   name = 'BothubRu';
   getApiKeyLink = undefined;
-  
   config = {
-    baseUrlKey: 'BOTHUB_RU_API_BASE_URL' ,
+    baseUrlKey: 'BOTHUB_RU_API_BASE_URL',
     baseModelListUrlKey: 'BOTHUB_RU_API_MODEL_LIST_URL',
     apiTokenKey: 'BOTHUB_RU_API_KEY',
   };
-
-  
 
   staticModels: ModelInfo[] = [];
 
@@ -24,7 +21,8 @@ export default class BothubRuProvider extends BaseProvider {
     serverEnv: Record<string, string> = {},
   ): Promise<ModelInfo[]> {
     console.log('1212', process.env.BOTHUB_RU_API_KEY);
-    let { baseUrl, apiKey } = this.getProviderBaseUrlAndKey({
+
+    const { baseUrl, apiKey } = this.getProviderBaseUrlAndKey({
       apiKeys,
       providerSettings: settings,
       serverEnv,
@@ -48,8 +46,7 @@ export default class BothubRuProvider extends BaseProvider {
 
     const res = (await response.json()) as any;
 
-
-   models = res.map((model: any) => ({
+    models = res.map((model: any) => ({
       name: model.id,
       label: model.id,
       provider: this.name,
@@ -63,7 +60,6 @@ export default class BothubRuProvider extends BaseProvider {
     // save models to file
     fs.writeFileSync('models.json', JSON.stringify(models, null, 2));
 
-    
     return models;
   }
 
