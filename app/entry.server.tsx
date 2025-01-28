@@ -5,6 +5,9 @@ import { renderToReadableStream } from 'react-dom/server';
 import { renderHeadToString } from 'remix-island';
 import { Head } from './root';
 import { themeStore } from '~/lib/stores/theme';
+import dotenv from 'dotenv';
+
+dotenv.config({ path: '.env' });
 
 export default async function handleRequest(
   request: Request,

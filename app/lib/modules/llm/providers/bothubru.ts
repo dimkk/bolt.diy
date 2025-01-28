@@ -2,16 +2,19 @@ import { BaseProvider, getOpenAILikeModel } from '~/lib/modules/llm/base-provide
 import type { ModelInfo } from '~/lib/modules/llm/types';
 import type { IProviderSetting } from '~/types/model';
 import type { LanguageModelV1 } from 'ai';
+import fs from 'fs';
 
 export default class BothubRuProvider extends BaseProvider {
   name = 'BothubRu';
   getApiKeyLink = undefined;
-
+  
   config = {
-    baseUrlKey: 'BOTHUB_RU_API_BASE_URL',
+    baseUrlKey: 'BOTHUB_RU_API_BASE_URL' ,
     baseModelListUrlKey: 'BOTHUB_RU_API_MODEL_LIST_URL',
     apiTokenKey: 'BOTHUB_RU_API_KEY',
   };
+
+  
 
   staticModels: ModelInfo[] = [];
 
@@ -20,7 +23,8 @@ export default class BothubRuProvider extends BaseProvider {
     settings?: IProviderSetting,
     serverEnv: Record<string, string> = {},
   ): Promise<ModelInfo[]> {
-    const { baseUrl, apiKey } = this.getProviderBaseUrlAndKey({
+    console.log('1212', process.env.BOTHUB_RU_API_KEY);
+    let { baseUrl, apiKey } = this.getProviderBaseUrlAndKey({
       apiKeys,
       providerSettings: settings,
       serverEnv,
@@ -28,8 +32,11 @@ export default class BothubRuProvider extends BaseProvider {
       defaultApiTokenKey: 'BOTHUB_RU_API_KEY',
     });
 
+    let models = [];
+
     if (!baseUrl || !apiKey) {
-      return [];
+      models = JSON.parse(fs.readFileSync('models.json', 'utf8'));
+      return models;
     }
 
     const response = await fetch(`https://bothub.chat/api/v2/model/list?children=1 `, {
@@ -41,13 +48,23 @@ export default class BothubRuProvider extends BaseProvider {
 
     const res = (await response.json()) as any;
 
-    //console.log(res);
-    return res.map((model: any) => ({
+
+   models = res.map((model: any) => ({
       name: model.id,
       label: model.id,
       provider: this.name,
       maxTokenAllowed: model.max_tokens,
     }));
+
+    if (models.length === 0) {
+      models = JSON.parse(fs.readFileSync('models.json', 'utf8'));
+    }
+
+    // save models to file
+    fs.writeFileSync('models.json', JSON.stringify(models, null, 2));
+
+    
+    return models;
   }
 
   getModelInstance(options: {
