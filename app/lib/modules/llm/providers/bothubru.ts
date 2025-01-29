@@ -2,7 +2,7 @@ import { BaseProvider, getOpenAILikeModel } from '~/lib/modules/llm/base-provide
 import type { ModelInfo } from '~/lib/modules/llm/types';
 import type { IProviderSetting } from '~/types/model';
 import type { LanguageModelV1 } from 'ai';
-import fs from 'fs';
+import { models as m } from './models';
 
 export default class BothubRuProvider extends BaseProvider {
   name = 'BothubRu';
@@ -33,7 +33,7 @@ export default class BothubRuProvider extends BaseProvider {
     let models = [];
 
     if (!baseUrl || !apiKey) {
-      models = JSON.parse(fs.readFileSync('models.json', 'utf8'));
+      models = m;
       return models;
     }
 
@@ -54,11 +54,8 @@ export default class BothubRuProvider extends BaseProvider {
     }));
 
     if (models.length === 0) {
-      models = JSON.parse(fs.readFileSync('models.json', 'utf8'));
+      models = m;
     }
-
-    // save models to file
-    fs.writeFileSync('models.json', JSON.stringify(models, null, 2));
 
     return models;
   }
