@@ -18,4 +18,7 @@ interface Env {
   XAI_API_KEY: string;
   PERPLEXITY_API_KEY: string;
   AWS_BEDROCK_CONFIG: string;
+  BOTHUB_RU_API_KEY: string;
+  BOTHUB_RU_API_BASE_URL: string;
+  BOTHUB_RU_API_MODEL_LIST_URL: string;
 }
