@@ -1,4 +1,4 @@
-export const models = [
+export const bothubmodels = [
   {
     name: 'o1-preview',
     label: 'o1-preview',

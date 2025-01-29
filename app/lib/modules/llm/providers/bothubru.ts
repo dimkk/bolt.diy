@@ -2,7 +2,7 @@ import { BaseProvider, getOpenAILikeModel } from '~/lib/modules/llm/base-provide
 import type { ModelInfo } from '~/lib/modules/llm/types';
 import type { IProviderSetting } from '~/types/model';
 import type { LanguageModelV1 } from 'ai';
-import { models as m } from './models';
+import { bothubmodels } from './models';
 
 export default class BothubRuProvider extends BaseProvider {
   name = 'BothubRu';
@@ -33,7 +33,7 @@ export default class BothubRuProvider extends BaseProvider {
     let models = [];
 
     if (!baseUrl || !apiKey) {
-      models = m;
+      models = bothubmodels;
       return models;
     }
 
@@ -54,7 +54,7 @@ export default class BothubRuProvider extends BaseProvider {
     }));
 
     if (models.length === 0) {
-      models = m;
+      models = bothubmodels;
     }
 
     return models;
