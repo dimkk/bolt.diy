@@ -21,4 +21,5 @@ interface Env {
   BOTHUB_RU_API_KEY: string;
   BOTHUB_RU_API_BASE_URL: string;
   BOTHUB_RU_API_MODEL_LIST_URL: string;
+  OPEN_ROUTER_API_KEY: string;
 }

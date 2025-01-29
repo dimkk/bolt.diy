@@ -49,7 +49,7 @@ export default defineConfig((config) => {
       chrome129IssuePlugin(),
       config.mode === 'production' && optimizeCssModules({ apply: 'build' }),
     ],
-    envPrefix: ["VITE_","OPENAI_LIKE_API_BASE_URL", "OLLAMA_API_BASE_URL", "LMSTUDIO_API_BASE_URL","TOGETHER_API_BASE_URL","BOTHUB_RU_API_BASE_URL","BOTHUB_RU_API_KEY","BOTHUB_RU_API_MODEL_LIST_URL"],
+    envPrefix: ["VITE_", "OPEN_ROUTER_API_KEY", "OPENAI_LIKE_API_BASE_URL", "OLLAMA_API_BASE_URL", "LMSTUDIO_API_BASE_URL","TOGETHER_API_BASE_URL","BOTHUB_RU_API_BASE_URL","BOTHUB_RU_API_KEY","BOTHUB_RU_API_MODEL_LIST_URL"],
     css: {
       preprocessorOptions: {
         scss: {
