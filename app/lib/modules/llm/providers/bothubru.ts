@@ -22,7 +22,7 @@ export default class BothubRuProvider extends BaseProvider {
   ): Promise<ModelInfo[]> {
     console.log('1212', process.env.BOTHUB_RU_API_KEY);
 
-    const { baseUrl, apiKey } = this.getProviderBaseUrlAndKey({
+    let { baseUrl = 'https://bothub.chat/api/v2/openai/v1', apiKey } = this.getProviderBaseUrlAndKey({
       apiKeys,
       providerSettings: settings,
       serverEnv,
@@ -31,6 +31,14 @@ export default class BothubRuProvider extends BaseProvider {
     });
 
     let models = [];
+
+    if (!baseUrl) {
+      baseUrl = 'https://bothub.chat/api/v2/openai/v1';
+    }
+
+    if (!apiKey) {
+      apiKey = '';
+    }
 
     if (!baseUrl || !apiKey) {
       models = bothubmodels;
